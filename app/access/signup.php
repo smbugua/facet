@@ -1,3 +1,6 @@
+<?php
+include('../../includes/dash_functions.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -71,8 +74,21 @@
 												</div>
 												<div class="form-group">
 													<label class="pull-left control-label mb-10" for="exampleInputpwd_3">Confirm Password</label>
-													<input type="password" class="form-control" required="" id="exampleInputpwd_3" placeholder="Enter pwd">
+													<input type="password" class="form-control"  required="" id="exampleInputpwd_3" placeholder="Enter pwd">
 												</div>
+												<div class="form-group">
+													<label class="pull-left control-label mb-10" for="exampleInputpwd_3">Account Type</label>
+													<select class="form-control" name="roleid">
+														<?php 
+														$query=querydb("SELECT id,name from userrole");
+														while($r=mysqli_fetch_array($query,MYSQLI_ASSOC)) {
+														 ?>
+														 <option value="<?php echo $r['id']?>" > <?php echo $r['name']?> </option>
+														<?php } ?>
+														
+													</select>
+												</div>
+
 												<div class="form-group">
 													<div class="checkbox checkbox-primary pr-10 pull-left">
 														<input id="checkbox_2" required="" type="checkbox">

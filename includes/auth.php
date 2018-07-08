@@ -6,7 +6,7 @@ $dbname = 'freelancer'; // Modify these...
 $dbuser = 'root'; // ...variables according
 $dbpass = ''; // ...to your installation
 
-$GLOBALS['con']=mysqli_connect("localhost","root","","cmdb");
+$GLOBALS['con']=mysqli_connect("localhost","root","","freelancer");
 
 function sessionStart()
 {

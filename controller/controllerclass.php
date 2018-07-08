@@ -1,28 +1,49 @@
 <?php
 require_once('../includes/dash_functions.php');
+ini_set('display_errors', 1);
 	//get signup action
 	if ($_GET['action']=="signup") {
 		# code...
 		$username=$_POST['username'];
 		$email=$_POST['email'];
 		$password=$_POST['password'];
+			$roleid=$_POST['roleid'];
 		$hash=password_hash($password, PASSWORD_DEFAULT);
-		querydb("INSERT INTO users (username,email,hashpassword)VALUES('$username','$email','$hash')");
-		//header("Location: ../app/access/index.php");
-	}elseif ($_GET['action']=="signin") {
+		//querydb("INSERT INTO users (username,email,hashpassword,date)VALUES('$username','$email','$hash')");
+		$date=date('Y-m-d');
+			$exec->addUsers($username,$email,$hash,$date);
+			$lastid=lastid();
+			echo $lastid;
+			echo "<br >";
+			echo $roleid;
+			$exec->addUserRole($lastid,$roleid);
+		header("Location: ../app/access/index.php");
+	}elseif($_GET['action']=="signin") {
 		$email=$_POST['email'];
 		$password=$_POST['password'];
+		echo $email;
+		echo $password;
 		$hash=password_hash($password, PASSWORD_DEFAULT);
 		$u=querydb("SELECT email,username,id,hashpassword from users where email='$email' ");
 		$isPasswordCorrect = password_verify($password, $hash);
 		$userq=mysqli_fetch_array($u,MYSQLI_ASSOC);
+		$uid=$userq['id'];
 		$no=numquery("SELECT email,username,id,hashpassword from users where email='$email'");
-		if ($no>=1 && $isPasswordCorrect) {
+		$role=processquery("SELECT roleid from user_role where userid='$uid' ");
+		$roleid=$role['roleid'];
+		if ($no>=1 && $isPasswordCorrect && $roleid=="1" ) {
 		session_start();
 		$_SESSION['user']=$userq['username'];
 		$_SESSION['loggedin']="TRUE";
-		header("Location: ../admin/index.php");			
-		}elseif ($no<1) {
+		header("Location: ../freelancer/index.php");			
+		
+		}elseif ($no>=1 && $isPasswordCorrect && $roleid=="2" ) {
+		session_start();
+		$_SESSION['user']=$userq['username'];
+		$_SESSION['loggedin']="TRUE";
+		header("Location: ../customer/index.php");			
+		}
+		elseif ($no<1) {
 		//session_start();
 			$_SESSION['loggedin']=FALSE;
 			header("Location: ../access/index.php");
@@ -32,7 +53,8 @@ require_once('../includes/dash_functions.php');
 			$name=$_POST['name'];
 			$email=$_POST['email'];
 			$roleid=$_POST['roles'];
-			$exec->addUsers($name,$username,$email);
+			$date=date('Y-m-d');
+			$exec->addUsers($username,$email,$password,$date);
 			$lastid=lastid();
 			$exec->addUserRole($lastid,$roleid);
 			header("Location: ../admin/view_users.php");			

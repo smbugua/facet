@@ -44,8 +44,12 @@ class MainClass
 
 
 	//add users
-	function addUsers($username,$email,$password){
-		querydb("INSERT INTO users(username,email,hashpassword)VALUES('$name','$username','$email','$password')");
+	function addUsers($username,$email,$password,$date){
+		querydb("INSERT INTO users(username,email,hashpassword,dateadded)VALUES('$username','$email','$password','$date')");
+	}
+	//add walletpayments
+	function addPayment($jobid,$walletid,$ref,$amountpaid){
+		querydb("INSERT INTO walletpayments(jobid,walletid,refference,amountpaid)values('$jobid','$walletid','$ref','$amountpaid')");
 	}
 
 
@@ -56,6 +60,9 @@ class MainClass
 	function addRole($name){
 		querydb("INSERT INTO userrole(name)values('$name')");
 	}
+	function addWallet($name){
+		querydb("INSERT INTO wallet(name)values('$name')");
+	}
 
 	function editObject($action,$id){
 		echo("../controllers/updatecontroller.php?action=$action&&id=$id");
@@ -63,7 +70,5 @@ class MainClass
 	function editClass($object,$id){
 		echo ("edit$object.php?id=$id");
 	}
-	function capturePost(){
-		
-	}
+
 }
