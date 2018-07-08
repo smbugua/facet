@@ -41,3 +41,8 @@ $count_nodes=querydb("SELECT id,name from userrole order by id asc where id !='3
 $result=$count_nodes;
 return $result;	
 }
+function get_userid($user){
+	$u=processquery("SELECT id from users where username='$user'");
+	$userid=$u['id'];
+	return $userid;
+}

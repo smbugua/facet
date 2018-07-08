@@ -35,13 +35,13 @@ ini_set('display_errors', 1);
 		session_start();
 		$_SESSION['user']=$userq['username'];
 		$_SESSION['loggedin']="TRUE";
-		header("Location: ../freelancer/index.php");			
+		header("Location: ../app/freelancer/index.php");			
 		
 		}elseif ($no>=1 && $isPasswordCorrect && $roleid=="2" ) {
 		session_start();
 		$_SESSION['user']=$userq['username'];
 		$_SESSION['loggedin']="TRUE";
-		header("Location: ../customer/index.php");			
+		header("Location: ../app/customer/index.php");			
 		}
 		elseif ($no<1) {
 		//session_start();
