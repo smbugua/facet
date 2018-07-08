@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 08, 2018 at 05:15 PM
+-- Generation Time: Jul 08, 2018 at 05:45 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -140,7 +140,15 @@ CREATE TABLE IF NOT EXISTS `userrole` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userrole`
+--
+
+INSERT INTO `userrole` (`id`, `name`) VALUES
+(1, 'Freelancer'),
+(2, 'Customer');
 
 -- --------------------------------------------------------
 
@@ -154,10 +162,23 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `hashpassword` varchar(500) NOT NULL,
-  `roleid` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
   `dateadded` date NOT NULL,
   `datemodified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `roleid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
